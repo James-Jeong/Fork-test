@@ -9,7 +9,13 @@
 
 #define BUF_MAX_SIZE 10 // read for one time
 
-int read_contents( int pid){
+
+/**
+ * @brief Open text file & read data per 10 bytes
+ * @param int pid
+ * @return int
+ */
+int read_data( int pid){
 	int fd = 0;
 	ssize_t read_byte = 0;
 	char buffer[BUF_MAX_SIZE];
@@ -29,15 +35,26 @@ int read_contents( int pid){
 	return pid;
 }
 
+/**
+ * @brief Process data for using in forked processes
+ * @param long pid
+ * @return int
+ */
 int process_data( long pid){
 	int rv = 0;
-	rv = read_contents( pid);
+	rv = read_data( pid);
 	if( rv < 0){
 		return rv;
 	}
 	return pid;
 }
 
+/**
+ * @brief 2 child & 1 parent processes for file IO
+ * @param int argc
+ * @param char** argv
+ * @return int
+ */
 int main( int argc, char **argv)
 {
 	if( argc != 2){
